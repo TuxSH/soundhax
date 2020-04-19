@@ -84,10 +84,10 @@ def gpu_to_pa(gpua):
 # "Using physical address: 0x27bf5d00 (in_address = 0x002f5d00)"
 def code_va_to_pa(va):
     if TYPE == "old":
-        if FIRM == "pre5":
-            return va + 0x23D00000 - 0x78000
-        else:
+        if FIRM == "post5":
             return va + 0x23D00000
+        else:
+            return va + 0x23D00000 - 0x78000
     else:
         return va + 0x27900000
 

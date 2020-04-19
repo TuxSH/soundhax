@@ -61,56 +61,53 @@ constants2x = {
         "usa": 0x15D62F10,
         "eur": 0x15D62F10,
         "jpn": 0x15D62F10,
-        "kor": 0x15D69A94,
         },
     "heapctx": {
-        #"usa": 0x0039B560,
+        "usa": 0x0039B560,
         "eur": 0x0039B580, #same
-        #"jpn": 0x0039B520,
+        "jpn": 0x0039B520,
         },
     "start": {
         #TODO
         "usa": 0x140018AF,
         "eur": 0x140018AF,
         "jpn": 0x140018AF,
-        "kor": 0x140018AF,
         },
     "end1": {
         #TODO
         "usa": 0x14001920,
         "eur": 0x14001920,
         "jpn": 0x14001920,
-        "kor": 0x14001920,
         },
     "sleep_gadget": {
-        #"usa": 0x001B5A5C,
+        "usa": 0x001B5A5C, #same, actually (!!)
         "eur": 0x002F11B0, #changed
-        #"jpn": 0x002F0F28,
+        "jpn": 0x002F0F18, #changed
         },
     "gpu_flushcache_gadget": {
-        #"usa": 0x002E2958,
+        "usa": 0x002E2948,
         "eur": 0x002E2AB8, #changed
-        #"jpn": 0x002E2830,
+        "jpn": 0x002E2820,
         },
     "gpu_enqueue_gadget": {
-        #"usa": 0x002E96FC,
+        "usa": 0x002E96EC,
         "eur": 0x002E9418, #changed
-        #"jpn": 0x002E95D4,
+        "jpn": 0x002E95C4,
         },
     "memcpy_gadget": {
-        #"usa": 0x0022DB1C,
+        "usa": 0x0022DB1C,
         "eur": 0x0022DB1C, #same
-        #"jpn": 0x0022DB1C,
+        "jpn": 0x0022DB1C,
         },
     "pop_r0_pc": {
-        #"usa": 0x002e6f80,
+        "usa": 0x002E6F70,
         "eur": 0x002E70E0, #changed
-        #"jpn": 0x002E6E58,
+        "jpn": 0x002E6E48,
         },
     "pop_r1_pc": {
-        #"usa": 0x0022B6C8,
+        "usa": 0x0022B6C8,
         "eur": 0x0022B6C8, #same
-        #"jpn": 0x0022B6C8,
+        "jpn": 0x0022B6C8,
         },
     "payload_stack_addr": {
         # check
@@ -122,12 +119,11 @@ constants2x = {
         "usa": 0x002F5D00,
         "eur": 0x002F5D00,
         "jpn": 0x002F5D00,
-        "kor": 0x002F5D00,
         },
     "pop_r2_thru_r6_pc": {
-        #"usa": 0x0021462C,
+        "usa": 0x0021462C,
         "eur": 0x00108910,
-        #"jpn": 0x0021462C,
+        "jpn": 0x0021462C,
         },
     "payload_heap_addr": {
         # check

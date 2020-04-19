@@ -1,46 +1,41 @@
 /* soundhax stage 2 */
 /* ported by nedwill from freakyhax (plutoo), with permission */
 
-//#define NEW /* new or old? */
-
 #if defined(USA)
 
 #define GSP_THREAD_OBJ_PTR  0x003BFFF0
 #define FS_OPEN_FILE 0x0022929C
-#define FS_READ_FILE 0x002C4204
 #define GSP_GET_HANDLE 0x0021C960
-#define GSP_GX_CMD4 0x002E9390
-#define GSP_FLUSH_DATA_CACHE 0x002E2950
 #define GSP_GET_INTERRUPTRECEIVER 0x001C805C
 #define GSP_ENQUEUE_CMD 0x001C7BF4
-#define GSP_WRITE_HW_REGS 0x002D5810
-#define FS_MOUNT_SDMC 0x0011FA90
+
+#define FS_READ_FILE 0x002C41F4
+#define GSP_GX_CMD4 0x002E9380
+#define GSP_FLUSH_DATA_CACHE 0x002E2940
 
 #elif defined(EUR)
 
 #define GSP_THREAD_OBJ_PTR  0x003C0010 // checked
 #define FS_OPEN_FILE 0x0022929C // checked
-#define FS_READ_FILE 0x002C4364 // checked, changed
 #define GSP_GET_HANDLE 0x0021C960 // checked
-#define GSP_GX_CMD4 0x002E94F0 // checked, changes
-#define GSP_FLUSH_DATA_CACHE 0x002E2AB0 // checked, changes
 #define GSP_GET_INTERRUPTRECEIVER 0x001C805C // checked
 #define GSP_ENQUEUE_CMD 0x001C7BF4 // checked
-//#define GSP_WRITE_HW_REGS 0x002D5940 // checked, changes
-//#define FS_MOUNT_SDMC 0x0011FA90 // checked
+
+#define FS_READ_FILE 0x002C4364 // checked, changed
+#define GSP_GX_CMD4 0x002E94F0 // checked, changes
+#define GSP_FLUSH_DATA_CACHE 0x002E2AB0 // checked, changes
 
 #elif defined(JPN)
 
 #define GSP_THREAD_OBJ_PTR  0x003BFFB0
 #define FS_OPEN_FILE 0x0022929C
-#define FS_READ_FILE 0x002C40DC
 #define GSP_GET_HANDLE 0x0021C960
-#define GSP_GX_CMD4 0x002E9268
-#define GSP_FLUSH_DATA_CACHE 0x002E2828
 #define GSP_GET_INTERRUPTRECEIVER 0x001C805C
 #define GSP_ENQUEUE_CMD 0x001C7BF4
-#define GSP_WRITE_HW_REGS 0x002D56E8
-#define FS_MOUNT_SDMC 0x0011FA90
+
+#define FS_READ_FILE 0x002C40CC
+#define GSP_GX_CMD4 0x002E9258
+#define GSP_FLUSH_DATA_CACHE 0x002E2818
 
 #elif defined(KOR)
 

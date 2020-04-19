@@ -15,15 +15,15 @@
 
 #elif defined(EUR)
 
-#define GSP_THREAD_OBJ_PTR  0x003C0010 // checked
-#define FS_OPEN_FILE 0x0022929C // checked
-#define GSP_GET_HANDLE 0x0021C960 // checked
-#define GSP_GET_INTERRUPTRECEIVER 0x001C805C // checked
-#define GSP_ENQUEUE_CMD 0x001C7BF4 // checked
+#define GSP_THREAD_OBJ_PTR  0x003C0010
+#define FS_OPEN_FILE 0x0022929C
+#define GSP_GET_HANDLE 0x0021C960
+#define GSP_GET_INTERRUPTRECEIVER 0x001C805C
+#define GSP_ENQUEUE_CMD 0x001C7BF4
 
-#define FS_READ_FILE 0x002C4364 // checked, changed
-#define GSP_GX_CMD4 0x002E94F0 // checked, changes
-#define GSP_FLUSH_DATA_CACHE 0x002E2AB0 // checked, changes
+#define FS_READ_FILE 0x002C4364
+#define GSP_GX_CMD4 0x002E94F0
+#define GSP_FLUSH_DATA_CACHE 0x002E2AB0
 
 #elif defined(JPN)
 

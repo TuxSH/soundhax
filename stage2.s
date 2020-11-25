@@ -85,6 +85,24 @@
 #define GSP_GET_INTERRUPTRECEIVER 0x00223880
 #define GSP_ENQUEUE_CMD 0x0022109C
 
+#elif defined(CHN)
+
+#if defined(V21AND22)
+#error "CHN region supported for this firmware version"
+#endif
+
+#define SRV_SESSIONHANDLE 0x0038D1C4 // confirmed
+#define SRV_SEMAPHORE 0x0038D1B4 // confirmed
+#define GSP_THREAD_OBJ_PTR  0x0038CA20 // confirmed
+#define GSP_THREAD_OBJ_PTR_OFFSET 0x1C // confirmed
+#define FS_OPEN_FILE 0x0022F0D8 // done
+#define FS_READ_FILE 0x0010C83C // confirmed
+#define GSP_GET_HANDLE 0x002238D4 // done
+#define GSP_GX_CMD4 0x001318A0 // confirmed
+#define GSP_FLUSH_DATA_CACHE 0x0012B728 // confirmed
+#define GSP_GET_INTERRUPTRECEIVER 0x002238C4 // done, maybe?
+#define GSP_ENQUEUE_CMD 0x002210E0 // done
+
 #else
 #error "region not supported"
 #endif
@@ -113,16 +131,24 @@ _start:
 /* Initialize stack. */
     mov  sp, #0x10000000
     sub  sp, #0x2C
+    bkpt 3
+
 /* Tell GSP thread to fuck off. */
     ldr  r0, =GSP_THREAD_OBJ_PTR
-#if defined(KOR)
+#if defined(KOR) || defined(CHN)
     ldr  r0, [r0,#GSP_THREAD_OBJ_PTR_OFFSET]
 #endif
     mov  r1, #1
     strb r1, [r0, #0x77]
     ldr  r0, [r0, #0x2C]
     svc  0x18
-#if defined(KOR) //A srv-notification thread is running that can't return from the thread-function. With KOR it's within the otherapp .text range. Overwrite the handle it uses so that it won't return from svcWaitSynchronizationN with the next call. Then send a notification so that it returns from waitsync for using the new handle.
+#if defined(KOR) || defined(CHN)
+    /*
+     * A srv-notification thread is running that can't return from the thread-function.
+     * With KOR/CHN it's within the otherapp .text range.
+     * Overwrite the handle it uses so that it won't return from svcWaitSynchronizationN with the next call.
+     * Then send a notification so that it returns from waitsync for using the new handle.
+    */
     svc 0x17 @ svcCreateEvent
     ldr r3, =SRV_SEMAPHORE
     str r1, [r3]

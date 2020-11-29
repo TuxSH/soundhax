@@ -121,6 +121,8 @@
 #define OTHERAPP_CODE_PA 0x23e01000 - 0x78000
 #endif
 #endif
+#undef OTHERAPP_CODE_PA
+#define OTHERAPP_CODE_PA 0x23d70000
 #define OTHERAPP_CODE_GPU (OTHERAPP_CODE_PA - 0xc000000)
 
 #define PARAMBLK_ADDR 0x14000000
@@ -131,7 +133,6 @@ _start:
 /* Initialize stack. */
     mov  sp, #0x10000000
     sub  sp, #0x2C
-    bkpt 3
 
 /* Tell GSP thread to fuck off. */
     ldr  r0, =GSP_THREAD_OBJ_PTR

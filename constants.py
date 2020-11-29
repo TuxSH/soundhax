@@ -147,7 +147,7 @@ constants_3x_and_later = {
         "eur": 0x15D62F10,
         "jpn": 0x15D62F10,
         "kor": 0x15D69A94,
-        "chn": 0x15D69A94,
+        "chn": 0x15d62708,#0x15d62750, #0x15D69A94, # changeme
         },
     "heapctx": {
         "usa": 0x0039B560,
@@ -156,19 +156,19 @@ constants_3x_and_later = {
         "kor": 0x003B4520,
         "chn": 0x003B4520,
         },
-    "start": {
+    "start": { # check
         "usa": 0x140018AF,
         "eur": 0x140018AF,
         "jpn": 0x140018AF,
         "kor": 0x140018AF,
-        "chn": 0x140018AF,
+        "chn": 0x1400198F,
         },
     "end1": {
         "usa": 0x14001920,
         "eur": 0x14001920,
         "jpn": 0x14001920,
         "kor": 0x14001920,
-        "chn": 0x14001920,
+        "chn": 0x14001A00,
         },
     "sleep_gadget": {
         "usa": 0x001B5A5C,
@@ -217,7 +217,7 @@ constants_3x_and_later = {
         "eur": 0x15D630C8,
         "jpn": 0x15D630C8,
         "kor": 0x15D69C38,
-        "chn": 0x15D69C38,
+        "chn": 0x15D62818,
         },
     "stage2_code_va": {
         "usa": 0x002F5D00,
